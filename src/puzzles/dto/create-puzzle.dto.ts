@@ -2,11 +2,11 @@ import { IsString, IsNumber } from 'class-validator';
 
 export class CreatePuzzleDto {
   @IsString()
-  title: string;
+  readonly title: string;
 
   @IsString()
-  gameType: string;
+  readonly gameType: string;
 
   @IsNumber()
-  limit: number;
+  readonly limit: number;
 }
