@@ -12,3 +12,61 @@ datasource db {
   provider = "mysql"
   url      = env("DATABASE_URL")
 }
+
+model Puzzle {
+  id  Int  @id @default(autoincrement())
+  title String
+  gameType String // "remove" || "move"
+  limit Int
+  difficulty String @default("Unrated")// "Easy", "Normal", "Hard", "Extreme"
+  initialState Json // 초기 상태
+  solution Json // 솔루션 (TODO: 분리하거나 암호화)
+  category Json // 문자열 배열 저장
+  createBy String // 만든 유저 아이디
+  likes Int @default(0) // 좋아요 수
+  attemptedCount Int @default(0) // 시도한 유저 수
+  correctCount Int @default(0) // 정답을 맞힌 유저 수
+  totalFeedbackScore Int @default(0) // 피드백 점수 총합
+  feedbackCount Int @default(0) // 피드백을 남긴 유저 수
+  createAt DateTime @default(now()) // 생성 시간 자동 기록
+  feadbacks Feedback[]
+  comments Comment[]
+
+  solvedByUsers User[] @relation("SolvedPuzzles")
+  attemptedByUsers User[] @relation("AttemptedPuzzles")
+}
+
+model Feedback {
+  id  Int @id @default(autoincrement())
+  userId Int
+  puzzleId Int
+  score Int // 피드백 점수(1 ~ 10)
+  createAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id])
+  puzzle Puzzle @relation(fields: [puzzleId], references: [id])
+}
+model User {
+  id Int @id @default(autoincrement())
+  username String @unique
+  email String @unique // 이메일 (로그인용)
+  password String // 해싱된 패스워드
+  level Int @default(1) // 유저 레벨
+  solvedPuzzles Puzzle[] @relation("SolvedPuzzles")
+  attemptedPuzzles Puzzle[] @relation("AttemptedPuzzles")
+  feedbacks Feedback[]
+  comments Comment[]
+}
+
+model Comment {
+  id Int @id @default(autoincrement())
+  content String // 댓글 내용
+  createdAt DateTime @default(now()) // 작성 시간
+  updatedAt DateTime @updatedAt
+
+  userId Int
+  puzzleId Int
+
+  user User @relation(fields: [userId], references: [id])
+  puzzle Puzzle @relation(fields: [puzzleId], references: [id])
+}
