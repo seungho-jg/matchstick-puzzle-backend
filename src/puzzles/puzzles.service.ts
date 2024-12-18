@@ -1,26 +1,32 @@
 import { Injectable } from '@nestjs/common';
+import { PrismaService } from '../prisma/prisma.service'
 import { CreatePuzzleDto } from './dto/create-puzzle.dto';
 import { UpdatePuzzleDto } from './dto/update-puzzle.dto';
 
 @Injectable()
 export class PuzzlesService {
+  constructor(private readonly prisma: PrismaService) {}
+
   create(createPuzzleDto: CreatePuzzleDto) {
-    return `This action adds a new puzzle-\n tittle: ${createPuzzleDto.title} type: ${createPuzzleDto.gameType}`;
+    return this.prisma.puzzle.create({ data: createPuzzleDto})
   }
 
   findAll() {
-    return `This action returns all puzzles`;
+    return this.prisma.puzzle.findMany();
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} puzzle`;
+    return this.prisma.puzzle.findUnique({ where: { id }});
   }
 
   update(id: number, updatePuzzleDto: UpdatePuzzleDto) {
-    return `This action updates a #${id} puzzle`;
+    return this.prisma.puzzle.update({
+      where: { id },
+      data: updatePuzzleDto,
+    });
   }
 
   remove(id: number) {
-    return `This action removes a #${id} puzzle`;
+    return this.prisma.puzzle.delete({ where: { id }});
   }
 }
