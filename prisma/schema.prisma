@@ -31,9 +31,21 @@ model Puzzle {
   createAt DateTime @default(now()) // 생성 시간 자동 기록
   feadbacks Feedback[]
   comments Comment[]
+  likedByUsers Like[]
 
   solvedByUsers User[] @relation("SolvedPuzzles")
   attemptedByUsers User[] @relation("AttemptedPuzzles")
+}
+
+model Like {
+  id Int @id @default(autoincrement())
+  puzzleId Int
+  userId Int
+
+  puzzle Puzzle @relation(fields: [puzzleId], references: [id])
+  user User @relation(fields: [userId], references: [id])
+
+  @@unique([puzzleId, userId]) // 유저가 퍼즐에 한 번만 좋아요를 누를 수 있도록 제한
 }
 
 model Feedback {
@@ -56,6 +68,7 @@ model User {
   attemptedPuzzles Puzzle[] @relation("AttemptedPuzzles")
   feedbacks Feedback[]
   comments Comment[]
+  likes Like[]
 }
 
 model Comment {

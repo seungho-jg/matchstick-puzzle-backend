@@ -1,4 +1,5 @@
-import { IsString, IsIn, IsInt, IsOptional } from 'class-validator';
+import { Type } from 'class-transformer';
+import { IsString, IsIn, IsInt, IsOptional, IsArray, ValidateNested, Min } from 'class-validator';
 
 export class CreatePuzzleDto {
   @IsString()
@@ -9,6 +10,8 @@ export class CreatePuzzleDto {
   gameType: string;
 
   @IsInt()
+  @Min(0)
+  @Type(()=> Number) // 문자열을 숫자로 변환
   limit: number;
 
   @IsOptional()
@@ -16,35 +19,35 @@ export class CreatePuzzleDto {
   @IsIn(['Easy', 'Normal', 'Hard', 'Extreme', 'Unrated'])
   difficulty?: string;
 
-  @IsOptional()
-  initialState: Record<string, any>;
+  @IsArray()
+  @ValidateNested({ each: true})
+  @Type(() => MatchstickDto)
+  initialState: MatchstickDto[];
+
+  @IsArray()
+  @ValidateNested({ each: true})
+  @Type(() => MatchstickDto)
+  solution: MatchstickDto[];
 
   @IsOptional()
-  solution: Record<string, any>;
+  @IsArray()
+  @IsString({ each: true })
+  category: string[];
 
-  @IsOptional()
-  category: Record<string, any>;
-
-  @IsOptional()
+  @IsString()
   createBy: string;
+}
 
-  @IsOptional()
-  @IsInt()
-  likes?: number;
+export class MatchstickDto {
+  @IsString()
+  id: string;
 
-  @IsOptional()
   @IsInt()
-  attemptedCount?: number;
+  x: number;
 
-  @IsOptional()
   @IsInt()
-  correctCount?: number;
+  y: number;
 
-  @IsOptional()
   @IsInt()
-  totalFeedbackScore?: number;
-
-  @IsOptional()
-  @IsInt()
-  feedbackCount?: number;
+  angle: number;
 }
