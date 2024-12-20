@@ -16,8 +16,7 @@ export class PuzzlesService {
       initialState: JSON.stringify(createPuzzleDto.initialState),
       solution: JSON.stringify(createPuzzleDto.solution),
       category: JSON.stringify(createPuzzleDto.category),
-      createBy: createPuzzleDto.createBy,
-      likes: 0,
+      createBy: createPuzzleDto.createBy
     }})
   }
 
@@ -34,7 +33,14 @@ export class PuzzlesService {
       where: { id },
       data: {
         title: updatePuzzleDto.title,
-        
+        gameType: updatePuzzleDto.gameType,
+        limit: updatePuzzleDto.limit,
+        difficulty: updatePuzzleDto.difficulty ?? 'Unrated',
+        initialState: JSON.stringify(updatePuzzleDto.initialState),
+        solution: JSON.stringify(updatePuzzleDto.solution),
+        category: JSON.stringify(updatePuzzleDto.category),
+        createBy: updatePuzzleDto.createBy,
+        attemptedCount: updatePuzzleDto.likes,
       },
     });
   }
