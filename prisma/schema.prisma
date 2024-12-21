@@ -62,6 +62,8 @@ model User {
   username String @unique
   email String @unique // 이메일 (로그인용)
   password String // 해싱된 패스워드
+  isVerified Boolean @default(false) // 인증 여부
+  verificationToken String? // 이메일 인증 토큰
   level Int @default(1) // 유저 레벨
   solvedPuzzles Puzzle[] @relation("SolvedPuzzles")
   attemptedPuzzles Puzzle[] @relation("AttemptedPuzzles")

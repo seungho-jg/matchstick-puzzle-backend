@@ -3,13 +3,15 @@ import { NestFactory } from '@nestjs/core';
 import { PrismaModule } from './prisma/prisma.module';
 import { UsersModule } from './users/users.module';
 import { PuzzlesModule } from './puzzles/puzzles.module';
+import { AuthModule } from './auth/auth.module';
 
 
 @Module({
   imports : [
     PrismaModule,
     UsersModule,
-    PuzzlesModule
+    PuzzlesModule,
+    AuthModule
   ]
 })
 class RootModule {}
