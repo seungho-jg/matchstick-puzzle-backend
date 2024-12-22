@@ -6,7 +6,6 @@ import { PrismaService } from 'src/prisma/prisma.service';
 import { sendVerificationEmail } from './utils/mailer';
 import { generateVarificationToken } from './utils/token-generator';
 import { JwtService } from '@nestjs/jwt';
-import { error } from 'console';
 
 @Injectable()
 export class AuthService {
@@ -83,8 +82,9 @@ export class AuthService {
     // 이메일 전송
     try{
       await sendVerificationEmail(email, username, verificationToken)
-    } catch {
-      console.log("이메일 오류")
+    } catch (error) {
+      console.error(error);
+      throw new Error('Email Error');
     } 
 
     return { message: 'User registered successfully. please check your email to verify your account.'};
