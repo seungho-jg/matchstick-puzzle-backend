@@ -27,6 +27,9 @@ async function bootstrap() {
       transform: true, // 요청 데이터를 DTO 클래스 인스턴스로 변환
     })
   )
+  // CORS 활성화
+  app.enableCors();
+  
   await app.listen(process.env.PORT ?? 3000);
 }
 bootstrap();

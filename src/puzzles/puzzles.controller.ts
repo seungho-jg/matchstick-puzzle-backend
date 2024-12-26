@@ -19,7 +19,6 @@ export class PuzzlesController {
   }
 
   @Get(':id')
-  @UseGuards(JwtAuthGuard)
   findOne(@Param('id') id: string) {
     return this.puzzlesService.findOne(+id);
   }
