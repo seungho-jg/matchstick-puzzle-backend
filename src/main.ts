@@ -4,6 +4,7 @@ import { PrismaModule } from './prisma/prisma.module';
 import { UsersModule } from './users/users.module';
 import { PuzzlesModule } from './puzzles/puzzles.module';
 import { AuthModule } from './auth/auth.module';
+import { LikesModule } from './likes/likes.module';
 
 
 @Module({
@@ -11,7 +12,8 @@ import { AuthModule } from './auth/auth.module';
     PrismaModule,
     UsersModule,
     PuzzlesModule,
-    AuthModule
+    AuthModule,
+    LikesModule
   ]
 })
 class RootModule {}
@@ -28,7 +30,10 @@ async function bootstrap() {
     })
   )
   // CORS 활성화
-  app.enableCors();
+  app.enableCors({
+    origin: 'http://localhost:5173', // 프론트엔드 주소
+    credentials: true,
+  });
   
   await app.listen(process.env.PORT ?? 3000);
 }

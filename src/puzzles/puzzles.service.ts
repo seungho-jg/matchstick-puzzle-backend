@@ -25,7 +25,14 @@ export class PuzzlesService {
   }
 
   findOne(id: number) {
-    return this.prisma.puzzle.findUnique({ where: { id }});
+    return this.prisma.puzzle.findUnique({
+       where: { id },
+       include: {
+        _count: {
+          select: { likes: true }
+        }
+       }
+    });
   }
 
   update(id: number, updatePuzzleDto: UpdatePuzzleDto) {
