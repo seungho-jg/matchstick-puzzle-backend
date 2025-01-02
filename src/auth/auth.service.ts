@@ -1,26 +1,25 @@
 import * as bcrypt from 'bcrypt';
-import { Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
-import { RegisterDto } from './dto/register.dto';
+import { ConflictException, Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
 import { LoginDto } from './dto/login.dto';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { sendVerificationEmail } from './utils/mailer';
-import { generateVarificationToken } from './utils/token-generator';
 import { JwtService } from '@nestjs/jwt';
+import { UsersService } from 'src/users/users.service';
+import { CreateUserDto } from 'src/users/dto/create-user.dto';
 
 @Injectable()
 export class AuthService {
   constructor(
     private readonly prisma: PrismaService,
     private readonly jwtService: JwtService,
+    private readonly usersService: UsersService,
   ) {}
 
   async login(loginDto : LoginDto) {
     const { email, password } = loginDto;
     
     // 이메일로 사용자 찾기
-    const user = await this.prisma.user.findUnique({
-      where: { email },
-    });
+    const user = await this.usersService.findByEmail(email);
 
     if (!user) {
       throw new NotFoundException('Invalid email or password.');
@@ -38,50 +37,28 @@ export class AuthService {
     }
     console.log("login OK: ", user.username)
     // JWT 토큰 생성
-    const payload = { userId: user.id, username: user.username };
+    const payload = {
+      sub: user.id,
+      username: user.username,
+      email: user.email
+    };
     const token = this.jwtService.sign(payload);
     return { token, message: 'Login successful.'};
   }
 
-  async register(registerDto: RegisterDto) {
-    const { username, email, password } = registerDto;
+  async register(registerDto: CreateUserDto) {
 
       // 중복 검사
-    const existingUser = await this.prisma.user.findFirst({
-      where: {
-        OR: [
-          { username },
-          { email },
-        ],
-      },
-    });
-
+    const existingUser = await this.usersService.findByEmail(registerDto.email);
     if (existingUser) {
-      throw new UnauthorizedException(
-        'Username or email is already taken. Please choose another.',
-      );
+      throw new ConflictException('Username or email is already taken. Please choose another.');
     }
-  
-    // 비밀번호 해싱
-    const salt = await bcrypt.genSalt(10);
-    const hashedPassword = await bcrypt.hash(password, salt);
 
-    // 인증 토큰 생성
-    const verificationToken = generateVarificationToken();
-
-    // 사용자 저장
-    await this.prisma.user.create({
-      data: {
-        username,
-        email,
-        password: hashedPassword,
-        verificationToken // 인증 토큰 저장
-      }
-    });
+    const user = await this.usersService.create(registerDto);
 
     // 이메일 전송
     try{
-      await sendVerificationEmail(email, username, verificationToken)
+      await sendVerificationEmail(user.email, user.username, user.verificationToken as string);
     } catch (error) {
       console.error(error);
       throw new Error('Email Error');

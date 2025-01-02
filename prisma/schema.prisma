@@ -44,7 +44,7 @@ model Like {
   puzzle Puzzle @relation(fields: [puzzleId], references: [id])
   user User @relation(fields: [userId], references: [id])
 
-  @@unique([puzzleId, userId]) // 유저가 퍼즐에 한 번만 좋아요를 누를 수 있도록 제한
+  @@unique([puzzleId, userId], name : "userId_puzzleId_unique") // 유저가 퍼즐에 한 번만 좋아요를 누를 수 있도록 제한
 }
 
 model Feedback {
@@ -65,6 +65,13 @@ model User {
   isVerified Boolean @default(false) // 인증 여부
   verificationToken String? // 이메일 인증 토큰
   level Int @default(1) // 유저 레벨
+  exp Int @default(0) // 현재 경험치
+  totalExp Int @default(0) // 총 경험치
+
+  // 힌트 관련 필드 추가
+  hintCount Int @default(3) // 기본 3개 제공
+  lastHintChanrgeAt DateTime? // 마지막 힌트 충전 시간
+
   solvedPuzzles Puzzle[] @relation("SolvedPuzzles")
   attemptedPuzzles Puzzle[] @relation("AttemptedPuzzles")
   feedbacks Feedback[]
