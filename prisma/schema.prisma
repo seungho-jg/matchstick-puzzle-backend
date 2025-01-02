@@ -20,7 +20,6 @@ model Puzzle {
   limit Int
   difficulty String @default("Unrated") // "Easy", "Normal", "Hard", "Extreme"
   initialState Json // 초기 상태
-  solution Json // 솔루션 (TODO: 분리하거나 암호화)
   category Json // 문자열 배열 저장
   createBy String // 만든 유저 아이디
   attemptedCount Int @default(0) // 시도한 유저 수
@@ -31,9 +30,17 @@ model Puzzle {
   feaebacks Feedback[]
   comments Comment[]
   likes Like[]
-
+  solutions Solution[]
   solvedByUsers User[] @relation("SolvedPuzzles")
   attemptedByUsers User[] @relation("AttemptedPuzzles")
+}
+
+model Solution {
+  id Int @id @default(autoincrement())
+  puzzleId Int
+  answer Json
+
+  puzzle Puzzle @relation(fields: [puzzleId], references: [id])
 }
 
 model Like {
