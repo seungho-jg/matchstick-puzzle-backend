@@ -12,7 +12,7 @@ import { UsersModule } from 'src/users/users.module';
     PassportModule.register({ defaultStrategy: 'jwt' }),
     JwtModule.register({
       secret: process.env.JWT_SECRET,
-      signOptions: { expiresIn: '1h'},
+      signOptions: { expiresIn: '7d'},
     })
   , PrismaModule],
   controllers: [AuthController],
