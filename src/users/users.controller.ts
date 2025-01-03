@@ -22,7 +22,7 @@ export class UsersController {
 
   @Get('me')
   findOne(@Req() req: { user: UserPayload}) {
-    return this.usersService.findOne(+req.user.id);
+    return this.usersService.getUserPuzzleInfo(+req.user.id);
   }
 
   @Post(':id')

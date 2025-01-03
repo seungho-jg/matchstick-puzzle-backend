@@ -1,9 +1,9 @@
 export const DIFFICULTY_EXP = {
+  'Unrated': 10,
   'Easy': 10,
   'Normal': 20,
   'Hard': 30,
   'Expert': 40,
-  'Unrated': 5
 } as const;
 
 // 다음 레벨까지 필요한 경험치 계산
