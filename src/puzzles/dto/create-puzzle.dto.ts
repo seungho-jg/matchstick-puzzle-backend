@@ -1,5 +1,5 @@
 import { Type } from 'class-transformer';
-import { IsString, IsIn, IsInt, IsOptional, IsArray, ValidateNested, Min } from 'class-validator';
+import { IsString, IsIn, IsInt, IsOptional, IsArray, ValidateNested, Min, IsBoolean } from 'class-validator';
 
 export class CreatePuzzleDto {
   @IsString()
@@ -50,4 +50,8 @@ export class MatchstickDto {
 
   @IsInt()
   angle: number;
+
+  @IsOptional()
+  @IsBoolean()
+  isDeleted: boolean;
 }
