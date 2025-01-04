@@ -34,6 +34,9 @@ export class UsersService {
 
   async findAll() {
     return this.prisma.user.findMany({
+      where: {
+        role: 'USER'
+      },
       select: {
         id: true,
         username: true,
