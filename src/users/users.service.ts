@@ -32,8 +32,19 @@ export class UsersService {
     return this.prisma.user.findUnique({ where: { email }});
   }
 
-  findAll() {
-    return this.prisma.user.findMany();
+  async findAll() {
+    return this.prisma.user.findMany({
+      select: {
+        id: true,
+        username: true,
+        level: true,
+        totalExp: true,
+        createdPuzzles: true,
+      },
+      orderBy: {
+        level: 'desc',
+      },
+    });
   }
 
   findOne(id: number) {
@@ -91,7 +102,7 @@ export class UsersService {
     // 제작한 퍼즐 조회
     const createdPuzzles = await this.prisma.puzzle.findMany({
       where: {
-        createBy: user.username
+        createById: userId
       },
       select: {
         id: true,

@@ -21,7 +21,8 @@ model Puzzle {
   difficulty String @default("Unrated") // "Easy", "Normal", "Hard", "Extreme"
   initialState Json // 초기 상태
   category Json // 문자열 배열 저장
-  createBy String // 만든 유저 아이디
+  createById Int // 만든 유저 아이디
+  createBy User @relation("CreatedPuzzles", fields: [createById], references: [id])
   attemptedCount Int @default(0) // 시도한 유저 수
   correctCount Int @default(0) // 정답을 맞힌 유저 수
   totalFeedbackScore Int @default(0) // 피드백 점수 총합
@@ -66,6 +67,7 @@ model Feedback {
 }
 model User {
   id Int @id @default(autoincrement())
+  role String @default("user") // "user" || "admin"
   username String @unique
   email String @unique // 이메일 (로그인용)
   password String // 해싱된 패스워드
@@ -79,6 +81,7 @@ model User {
   hintCount Int @default(3) // 기본 3개 제공
   lastHintChanrgeAt DateTime? // 마지막 힌트 충전 시간
 
+  createdPuzzles Puzzle[] @relation("CreatedPuzzles")
   solvedPuzzles Puzzle[] @relation("SolvedPuzzles")
   attemptedPuzzles Puzzle[] @relation("AttemptedPuzzles")
   feedbacks Feedback[]

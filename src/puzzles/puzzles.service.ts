@@ -21,8 +21,9 @@ export class PuzzlesService {
 
     // 여러 정답 중 하나라도 일치하는지 확인
     const isCorrect = puzzle.solutions.some(solution => {
-      const answers = solution.answer as unknown as MatchstickDto[][]
-
+      // JSON 문자열을 파싱하여 배열로 변환
+      const answers = JSON.parse(solution.answer as string) as MatchstickDto[][];
+      
       return answers.some((solutionPattern: MatchstickDto[]) => {
         if (puzzle.gameType === 'move') {
           return checkMoveSimilarity(answer, solutionPattern, 30);
@@ -36,30 +37,91 @@ export class PuzzlesService {
     return isCorrect;
   }
 
-  create(createPuzzleDto: CreatePuzzleDto) {
-    return this.prisma.puzzle.create({ data: {
-      title: createPuzzleDto.title,
-      gameType: createPuzzleDto.gameType,
-      limit: createPuzzleDto.limit,
-      difficulty: createPuzzleDto.difficulty ?? 'Unrated',
-      initialState: JSON.stringify(createPuzzleDto.initialState),
-      category: JSON.stringify(createPuzzleDto.category),
-      createBy: createPuzzleDto.createBy
-    }})
+  async create(userId: number, createPuzzleDto: CreatePuzzleDto) {
+    try {
+      // DTO 데이터 검증
+      const {
+        title,
+        gameType,
+        limit,
+        difficulty = 'Unrated',  // 기본값 설정
+        initialState,
+        solution,
+        category = [],  // 기본값 설정
+      } = createPuzzleDto;
+
+
+      // 퍼즐 생성
+      const puzzle = await this.prisma.puzzle.create({
+        data: {
+          title,
+          gameType,
+          limit: Number(limit),  // 문자열로 들어올 경우를 대비해 Number로 변환
+          difficulty,
+          initialState : JSON.stringify(initialState),
+          category : JSON.stringify(category),
+          createById: userId,
+        }
+      });
+
+      // 해답 생성
+      await this.prisma.solution.create({
+        data: {
+          puzzleId: puzzle.id,
+          answer: JSON.stringify(solution)  // 여러 해답을 지원하기 위해 배열로 저장
+        }
+      });
+
+      return {
+        success: true,
+        puzzleId: puzzle.id,
+        message: '퍼즐이 성공적으로 생성되었습니다.'
+      };
+
+    } catch (error) {
+      console.error('퍼즐 생성 중 오류 발생:', error);
+      throw new Error('퍼즐 생성에 실패했습니다.');
+    }
   }
 
   findAll() {
-    return this.prisma.puzzle.findMany();
+    return this.prisma.puzzle.findMany({
+      include: {
+        createBy: {
+          select: {
+            id: true,
+            username: true,
+          }
+        },
+        _count: {
+          select: {
+            solvedByUsers: true,
+            attemptedByUsers: true,
+            likes: true
+          }
+        }
+      }
+    });
   }
 
   findOne(id: number) {
     return this.prisma.puzzle.findUnique({
-       where: { id },
-       include: {
+      where: { id },
+      include: {
+        createBy: {
+          select: {
+            id: true,
+            username: true,
+          }
+        },
         _count: {
-          select: { likes: true }
+          select: {
+            solvedByUsers: true,
+            attemptedByUsers: true,
+            likes: true
+          }
         }
-       }
+      }
     });
   }
 
@@ -72,16 +134,47 @@ export class PuzzlesService {
         limit: updatePuzzleDto.limit,
         difficulty: updatePuzzleDto.difficulty ?? 'Unrated',
         initialState: JSON.stringify(updatePuzzleDto.initialState),
-        // solution: JSON.stringify(updatePuzzleDto.solution),
         category: JSON.stringify(updatePuzzleDto.category),
-        createBy: updatePuzzleDto.createBy,
-        attemptedCount: updatePuzzleDto.likes,
       },
     });
   }
 
-  remove(id: number) {
-    return this.prisma.puzzle.delete({ where: { id }});
+  async remove(id: number, userId: number) {
+    try {
+      const puzzle = await this.prisma.puzzle.findFirst({
+        where: {
+          id,
+          createById: userId
+        }
+      });
+
+      if (!puzzle) {
+        throw new NotFoundException(`ID ${id}의 퍼즐을 찾을 수 없거나 삭제 권한이 없습니다.`);
+      }
+
+      // 트랜잭션으로 관련된 모든 데이터 삭제
+      return await this.prisma.$transaction(async (prisma) => {
+        // 연결된 데이터 먼저 삭제
+        await prisma.solution.deleteMany({ where: { puzzleId: id } });
+        await prisma.like.deleteMany({ where: { puzzleId: id } });
+        
+        // 다대다 관계 해제
+        await prisma.puzzle.update({
+          where: { id },
+          data: {
+            solvedByUsers: { set: [] },
+            attemptedByUsers: { set: [] }
+          }
+        });
+
+        // 마지막으로 퍼즐 삭제
+        return await prisma.puzzle.delete({ where: { id } });
+      });
+
+    } catch (error) {
+      console.error('퍼즐 삭제 중 에러 발생:', error);
+      throw error;
+    }
   }
 
   async handlePuzzleSolved(puzzleId: number, userId: number, answer: MatchstickDto[]) {

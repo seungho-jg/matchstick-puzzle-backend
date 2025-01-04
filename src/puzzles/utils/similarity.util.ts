@@ -24,12 +24,12 @@ export function checkMoveSimilarity(currentState: MatchstickDto[], solution: Mat
 
 export function checkRemoveSimilarity(currentState: MatchstickDto[], solution: MatchstickDto[], limit: number): boolean {
   const removedSticks = currentState.filter(stick => stick.isDeleted);
-  
+
   if (removedSticks.length !== limit) return false;
 
   const removeIds = removedSticks.map(stick => stick.id);
-  
-  return solution.every((solutionStick: MatchstickDto) => 
+
+  return !solution.some((solutionStick: MatchstickDto) => 
     removeIds.includes(solutionStick.id)
   );
 } 
