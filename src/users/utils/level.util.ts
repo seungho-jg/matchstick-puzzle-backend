@@ -32,13 +32,5 @@ export function calculateExpBonus(difficulty: string, userLevel: number): number
   const baseExp = DIFFICULTY_EXP[difficulty as keyof typeof DIFFICULTY_EXP] || 15;
   const levelPenalty = Math.max(0.5, 1 - (userLevel - 1) * 0.02); // 레벨당 2%씩 감소 (최소 50%)
   
-  console.log('Exp calculation:', {
-    difficulty,
-    userLevel,
-    baseExp,
-    levelPenalty,
-    finalExp: Math.floor(baseExp * levelPenalty)
-  });
-  
   return Math.floor(baseExp * levelPenalty);
 }

@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { PrismaService } from 'src/prisma/prisma.service';
@@ -136,5 +136,56 @@ export class UsersService {
         totalCreated: createdPuzzles.length
       }
     };
+  }
+
+  // 퍼즐 생성 카운트 차감
+  async decreaseCreateCount(userId: number) {
+    const user = await this.prisma.user.findUnique({
+      where: { id: userId },
+      select: {
+        createCount: true,
+      }
+    });
+    if (!user) {
+      throw new NotFoundException('User not found');
+    }
+
+    if (user.createCount <= 0) {
+      throw new BadRequestException('크래프트 코인이 부족합니다.');
+    }
+
+    return this.prisma.user.update({
+      where: { id: userId },
+      data: { createCount: { decrement: 1 } },
+    });
+  }
+
+  // 퍼즐 생성 카운트 증가
+  async increaseCreateCount(userId: number, amount: number) {
+    return this.prisma.user.update({
+      where: { id: userId },
+      data: {
+        createCount: {
+          increment: amount 
+      }
+    },
+    select: {
+      createCount: true,
+    }
+    });
+  }
+
+  // 현재 퍼즐 생성 카운트 조회
+  async getCreateCount(userId: number) {
+    const user = await this.prisma.user.findUnique({
+      where: { id: userId },
+      select: { createCount: true },
+    });
+
+    if (!user) {
+      throw new NotFoundException('User not found');
+    }
+
+    return user.createCount;
   }
 }

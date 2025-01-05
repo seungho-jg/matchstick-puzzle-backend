@@ -1,13 +1,17 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service'
 import { CreatePuzzleDto, MatchstickDto } from './dto/create-puzzle.dto';
 import { UpdatePuzzleDto } from './dto/update-puzzle.dto';
 import { calculateExpBonus, calculateLevelUp } from 'src/users/utils/level.util';
 import { checkMoveSimilarity, checkRemoveSimilarity } from './utils/similarity.util';
+import { UsersService } from 'src/users/users.service';
 
 @Injectable()
 export class PuzzlesService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(
+    private readonly prisma: PrismaService,
+    private readonly usersService: UsersService
+  ) {}
 
   async checkAnswer(puzzleId: number, answer: MatchstickDto[]) {
     const puzzle = await this.prisma.puzzle.findUnique({
@@ -50,6 +54,9 @@ export class PuzzlesService {
         category = [],  // 기본값 설정
       } = createPuzzleDto;
 
+      // 퍼즐 생성 전에 카운트 차감
+      await this.usersService.decreaseCreateCount(userId);
+
 
       // 퍼즐 생성
       const puzzle = await this.prisma.puzzle.create({
@@ -79,8 +86,11 @@ export class PuzzlesService {
       };
 
     } catch (error) {
-      console.error('퍼즐 생성 중 오류 발생:', error);
-      throw new Error('퍼즐 생성에 실패했습니다.');
+      if (error instanceof BadRequestException) {
+        throw error
+      }
+      console.error('퍼즐 생성 중 오류 발생:', error)
+      throw new Error(error)
     }
   }
 
@@ -207,7 +217,6 @@ export class PuzzlesService {
 
     // 처음 시도하는 경우에만 attemptedCount 증가
     if (!hasAttempted) {
-      console.log('Updating attempted count...');
       await this.prisma.puzzle.update({
         where: { id: puzzleId },
         data: {
@@ -220,7 +229,6 @@ export class PuzzlesService {
     }
 
     if (!isCorrect) {
-      console.log('Puzzle not correct');
       return { success: false };
     }
 
@@ -239,11 +247,14 @@ export class PuzzlesService {
       console.log('Puzzle or user not found:', { puzzle, user });
       throw new NotFoundException('퍼즐 또는 사용자를 찾을 수 없습니다.');
     }
-
+    // TODO: 아래 user.service로 옮겨야함
     // 경험치 계산
     const expBonus = calculateExpBonus(puzzle.difficulty, user.level);
     const { newLevel, newExp } = calculateLevelUp(user.level, user.exp + expBonus);
 
+    if (newLevel > user.level) {
+      await this.usersService.increaseCreateCount(userId, 2 * newLevel);
+    }
     // 사용자 정보 업데이트
     await this.prisma.user.update({
       where: { id: userId },

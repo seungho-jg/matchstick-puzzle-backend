@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, UseGuards, Param } from '@nestjs/common';
+import { Controller, Get, Post, Body, UseGuards, Param, Delete } from '@nestjs/common';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { AdminGuard } from '../auth/admin.guard';
 import { AdminService } from './admin.service';
@@ -24,5 +24,10 @@ export class AdminController {
     @Body() data: { difficulty: 'Easy' | 'Normal' | 'Hard' | 'Extreme' }
   ) {
     return this.adminService.updatePuzzleDifficulty(+id, data.difficulty);
+  }
+
+  @Delete('puzzles/:id')
+  deletePuzzle(@Param('id') id: string) {
+    return this.adminService.deletePuzzle(+id);
   }
 }

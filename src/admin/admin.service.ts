@@ -61,5 +61,32 @@ export class AdminService {
     });
   }
 
-  // 기타 관리자 기능들...
+  async deletePuzzle(puzzleId: number) {
+    const puzzle = await this.prisma.puzzle.findUnique({
+      where: { id: puzzleId }
+    });
+
+    if (!puzzle) {
+      throw new NotFoundException('퍼즐을 찾을 수 없습니다.');
+    }
+
+    // 트랜잭션으로 관련된 모든 데이터 삭제
+    return await this.prisma.$transaction(async (prisma) => {
+      // 연결된 데이터 먼저 삭제
+      await prisma.solution.deleteMany({ where: { puzzleId } });
+      await prisma.like.deleteMany({ where: { puzzleId } });
+      
+      // 다대다 관계 해제
+      await prisma.puzzle.update({
+        where: { id: puzzleId },
+        data: {
+          solvedByUsers: { set: [] },
+          attemptedByUsers: { set: [] }
+        }
+      });
+
+      // 마지막으로 퍼즐 삭제
+      return await prisma.puzzle.delete({ where: { id: puzzleId } });
+    });
+  }
 }

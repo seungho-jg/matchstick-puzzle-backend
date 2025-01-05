@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Param, Delete, UseGuards, Req } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Delete, UseGuards, Req, Request } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
@@ -36,5 +36,12 @@ export class UsersController {
   @UseGuards(JwtAuthGuard)
   remove(@Param('id') id: string) {
     return this.usersService.remove(+id);
+  }
+
+  @Get('puzzle-create-count')
+  @UseGuards(JwtAuthGuard)
+  async getPuzzleCreateCount(@Request() req: { user: UserPayload }) {
+    const count = await this.usersService.getCreateCount(req.user.id);
+    return { puzzleCreateCount: count };
   }
 }
