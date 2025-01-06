@@ -40,14 +40,19 @@ export class AuthService {
     const payload = {
       sub: user.id,
       username: user.username,
-      email: user.email
+      email: user.email,
+      role: user.role,
     };
     const token = this.jwtService.sign(payload);
     
     return { 
-      success: true,
-      token, 
-      message: '로그인되었습니다.'
+      token,
+      user: {
+        id: user.id,
+        username: user.username,
+        email: user.email,
+        role: user.role,
+      }
     };
   }
 

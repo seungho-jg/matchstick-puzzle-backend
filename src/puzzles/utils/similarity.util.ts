@@ -5,6 +5,8 @@ import { toRelativeCoordinates } from './coordinate.util';
 export function checkMoveSimilarity(currentState: MatchstickDto[], solution: MatchstickDto[], threshold = 30): boolean {    
   const relativeCurrent = toRelativeCoordinates(currentState);
   const relativeSolution = toRelativeCoordinates(solution);
+  console.log('relativeCurrent',relativeCurrent)
+  console.log('relativeSolution',relativeSolution)
 
   if (relativeCurrent.length !== relativeSolution.length) return false;
 
@@ -14,8 +16,9 @@ export function checkMoveSimilarity(currentState: MatchstickDto[], solution: Mat
         Math.abs(currentStick.relativeX - solutionStick.relativeX) <= threshold &&
         Math.abs(currentStick.relativeY - solutionStick.relativeY) <= threshold;
       
-      const angleMatch =
-        Math.abs(normalizeAngle(currentStick.angle) - normalizeAngle(solutionStick.angle)) <= threshold;
+      const angle1 = normalizeAngle(currentStick.angle);
+      const angle2 = normalizeAngle(solutionStick.angle);
+      const angleMatch = Math.abs(angle1 - angle2) <= threshold;
       
       return positionMatch && angleMatch;
     });
