@@ -10,8 +10,11 @@ export class PuzzlesController {
   constructor(private readonly puzzlesService: PuzzlesService) {}
 
   @Post()
-  create(@Body() createPuzzleDto: CreatePuzzleDto) {
-    return this.puzzlesService.create(createPuzzleDto);
+  @UseGuards(JwtAuthGuard)
+  create(
+    @Req() req: { user: UserPayload },
+    @Body() createPuzzleDto: CreatePuzzleDto) {
+    return this.puzzlesService.create(+req.user.id, createPuzzleDto);
   }
 
   @Get()
@@ -30,8 +33,9 @@ export class PuzzlesController {
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.puzzlesService.remove(+id);
+  @UseGuards(JwtAuthGuard)
+  remove(@Param('id') id: string, @Req() req: { user: UserPayload }) {
+    return this.puzzlesService.remove(+id, +req.user.id);
   }
 
   @Post(':id/solve')

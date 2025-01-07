@@ -19,9 +19,11 @@ model Puzzle {
   gameType String // "remove" || "move"
   limit Int
   difficulty String @default("Unrated") // "Easy", "Normal", "Hard", "Extreme"
+  difficultySetAt DateTime? // 난이도가 처음 설정된 시간
   initialState Json // 초기 상태
   category Json // 문자열 배열 저장
-  createBy String // 만든 유저 아이디
+  createById Int // 만든 유저 아이디
+  createBy User @relation("CreatedPuzzles", fields: [createById], references: [id])
   attemptedCount Int @default(0) // 시도한 유저 수
   correctCount Int @default(0) // 정답을 맞힌 유저 수
   totalFeedbackScore Int @default(0) // 피드백 점수 총합
@@ -66,6 +68,7 @@ model Feedback {
 }
 model User {
   id Int @id @default(autoincrement())
+  role String @default("user") // "user" || "admin"
   username String @unique
   email String @unique // 이메일 (로그인용)
   password String // 해싱된 패스워드
@@ -74,11 +77,14 @@ model User {
   level Int @default(1) // 유저 레벨
   exp Int @default(0) // 현재 경험치
   totalExp Int @default(0) // 총 경험치
+  membership Boolean @default(false) // 멤버십 여부
 
   // 힌트 관련 필드 추가
   hintCount Int @default(3) // 기본 3개 제공
   lastHintChanrgeAt DateTime? // 마지막 힌트 충전 시간
+  createCount Int @default(3) // 퍼즐 생성 횟수
 
+  createdPuzzles Puzzle[] @relation("CreatedPuzzles")
   solvedPuzzles Puzzle[] @relation("SolvedPuzzles")
   attemptedPuzzles Puzzle[] @relation("AttemptedPuzzles")
   feedbacks Feedback[]
@@ -91,6 +97,7 @@ model Comment {
   content String // 댓글 내용
   createdAt DateTime @default(now()) // 작성 시간
   updatedAt DateTime @updatedAt
+  isSpoiler Boolean @default(false) // 스포일러 여부
 
   userId Int
   puzzleId Int

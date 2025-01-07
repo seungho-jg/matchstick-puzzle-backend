@@ -5,6 +5,7 @@ import { UsersModule } from './users/users.module';
 import { PuzzlesModule } from './puzzles/puzzles.module';
 import { AuthModule } from './auth/auth.module';
 import { LikesModule } from './likes/likes.module';
+import { AdminModule } from './admin/admin.module';
 
 
 @Module({
@@ -13,7 +14,8 @@ import { LikesModule } from './likes/likes.module';
     UsersModule,
     PuzzlesModule,
     AuthModule,
-    LikesModule
+    LikesModule,
+    AdminModule
   ]
 })
 class RootModule {}

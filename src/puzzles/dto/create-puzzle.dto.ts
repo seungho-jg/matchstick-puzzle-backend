@@ -33,9 +33,6 @@ export class CreatePuzzleDto {
   @IsArray()
   @IsString({ each: true })
   category: string[];
-
-  @IsString()
-  createBy: string;
 }
 
 export class MatchstickDto {
