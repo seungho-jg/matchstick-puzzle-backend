@@ -116,6 +116,9 @@ export class AuthService {
       }
     })
 
-    return { message: 'Email verified successfully. You can now log in.'}
+    return { 
+      message: 'Email verified successfully. You can now log in.',
+      redirectUrl: 'https://matchstick-puzzle.com/login'
+    }
   }
 }

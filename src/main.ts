@@ -33,7 +33,7 @@ async function bootstrap() {
   )
   // CORS 활성화
   app.enableCors({
-    origin: 'https://matchstick-puzzle-front.pages.dev', // 프론트엔드 주소
+    origin: ['https://matchstick-puzzle-front.pages.dev', 'https://matchstick-puzzle.com'], // 프론트엔드 주소
     credentials: true,
   });
   
