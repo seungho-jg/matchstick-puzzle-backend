@@ -29,6 +29,7 @@ model Puzzle {
   totalFeedbackScore Int @default(0) // 피드백 점수 총합
   feedbackCount Int @default(0) // 피드백을 남긴 유저 수
   createAt DateTime @default(now()) // 생성 시간 자동 기록
+  editerPick Boolean @default(false) // 퍼즐 편집자 선정 여부
   feaebacks Feedback[]
   comments Comment[]
   likes Like[]
