@@ -5,8 +5,6 @@ import { toRelativeCoordinates } from './coordinate.util';
 export function checkMoveSimilarity(currentState: MatchstickDto[], solution: MatchstickDto[], threshold = 30): boolean {    
   const relativeCurrent = toRelativeCoordinates(currentState);
   const relativeSolution = toRelativeCoordinates(solution);
-  console.log('relativeCurrent',relativeCurrent)
-  console.log('relativeSolution',relativeSolution)
 
   if (relativeCurrent.length !== relativeSolution.length) return false;
 
