@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, UseGuards, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, UseGuards, Param, Delete, Query } from '@nestjs/common';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { AdminGuard } from '../auth/admin.guard';
 import { AdminService } from './admin.service';
@@ -13,9 +13,19 @@ export class AdminController {
     return this.adminService.getAllUsers();
   }
 
-  @Post('make-admin')
-  makeAdmin(@Body() data: { userId: number }) {
-    return this.adminService.makeAdmin(data.userId);
+  @Get('users/search')
+  searchUsers(@Query('query') query: string) {
+    return this.adminService.searchUsers(query);
+  }
+
+  @Post('make-role')
+  makeRole(@Body() data: { userId: number, role: string }) {
+    return this.adminService.makeRole(+data.userId, data.role);
+  }
+
+  @Post('add-create-credit')
+  addCreateCredit(@Body() data: { userId: number, amount: number }) {
+    return this.adminService.addCreateCredit(+data.userId, +data.amount);
   }
 
   @Post('puzzle/:id/difficulty')

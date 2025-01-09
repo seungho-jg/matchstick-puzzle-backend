@@ -24,10 +24,62 @@ export class AdminService {
     });
   }
 
-  async makeAdmin(userId: number) {
+  async searchUsers(query: string) {
+    if (!query) {
+      return [];  // 빈 검색어인 경우 빈 배열 반환
+    }
+
+    return this.prisma.user.findMany({
+      where: {
+        OR: [
+          { email: { contains: query } },
+          { username: { contains: query } },
+        ],
+      },
+      select: {
+        id: true,
+        username: true,
+        email: true,
+        role: true,
+        isVerified: true,
+        createCount: true,
+        level: true,
+        _count: {
+          select: {
+            createdPuzzles: true,
+            solvedPuzzles: true,
+          },
+        },
+      },
+    });
+  }
+
+  async makeRole(userId: number, role: string) {
     return this.prisma.user.update({
       where: { id: userId },
-      data: { role: 'ADMIN' },
+      data: { role: role },
+    });
+  }
+
+  async addCreateCredit(userId: number, amount: number) {
+    if (!userId || !amount) {
+      throw new Error('유효하지 않은 입력값입니다.');
+    }
+
+    return this.prisma.user.update({
+      where: { 
+        id: userId 
+      },
+      data: { 
+        createCount: { 
+          increment: amount 
+        } 
+      },
+      select: {
+        id: true,
+        username: true,
+        createCount: true,
+      }
     });
   }
 
