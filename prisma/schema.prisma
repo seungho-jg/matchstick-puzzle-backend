@@ -85,6 +85,10 @@ model User {
   lastHintChanrgeAt DateTime? // 마지막 힌트 충전 시간
   createCount Int @default(3) // 퍼즐 생성 횟수
 
+  // 스킨 관련 필드 추가
+  unlockedSkins Json @default("[]") // 해금된 스킨 목록
+  currentSkin String @default("default") // 현재 스킨
+
   createdPuzzles Puzzle[] @relation("CreatedPuzzles")
   solvedPuzzles Puzzle[] @relation("SolvedPuzzles")
   attemptedPuzzles Puzzle[] @relation("AttemptedPuzzles")
