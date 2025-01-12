@@ -43,7 +43,7 @@ model Solution {
   puzzleId Int
   answer Json
 
-  puzzle Puzzle @relation(fields: [puzzleId], references: [id])
+  puzzle Puzzle @relation(fields: [puzzleId], references: [id], onDelete: Cascade)
 }
 
 model Like {
@@ -51,8 +51,8 @@ model Like {
   puzzleId Int
   userId Int
 
-  puzzle Puzzle @relation(fields: [puzzleId], references: [id])
-  user User @relation(fields: [userId], references: [id])
+  puzzle Puzzle @relation(fields: [puzzleId], references: [id], onDelete: Cascade)
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([puzzleId, userId], name : "userId_puzzleId_unique") // 유저가 퍼즐에 한 번만 좋아요를 누를 수 있도록 제한
 }
@@ -107,6 +107,6 @@ model Comment {
   userId Int
   puzzleId Int
 
-  user User @relation(fields: [userId], references: [id])
-  puzzle Puzzle @relation(fields: [puzzleId], references: [id])
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  puzzle Puzzle @relation(fields: [puzzleId], references: [id], onDelete: Cascade)
 }
