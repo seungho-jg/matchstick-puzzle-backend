@@ -22,7 +22,7 @@ NestJS로 만든 성냥개비 퍼즐 사이트입니다. <a href="https://matchs
 <a href="https://seungho-dev.tistory.com/entry/React-%EC%84%B1%EB%83%A5%ED%8D%BC%EC%A6%90-%EC%9B%B9-%EC%84%9C%EB%B9%84%EC%8A%A4-%EB%A7%8C%EB%93%A4%EA%B8%B0-11%EC%9D%BC%EC%B0%A8-Mysql-Prisma-NestJS">11일차: Mysql / Prisma / NestJS</a>  
 <a href="https://seungho-dev.tistory.com/entry/React-%EC%84%B1%EB%83%A5%ED%8D%BC%EC%A6%90-%EC%9B%B9-%EC%84%9C%EB%B9%84%EC%8A%A4-%EB%A7%8C%EB%93%A4%EA%B8%B0-12%EC%9D%BC%EC%B0%A8-ValidationPipe">12일차: NestJS-ValidationPipe</a>  
 <a href="https://seungho-dev.tistory.com/entry/React-%EC%84%B1%EB%83%A5%ED%8D%BC%EC%A6%90-%EC%9B%B9-%EC%84%9C%EB%B9%84%EC%8A%A4-%EB%A7%8C%EB%93%A4%EA%B8%B0-13%EC%9D%BC%EC%B0%A8-nodemailer-bcrypt-JWT">13일차: nodemailer, bcrypt, JWT</a>  
-<a href="https://seungho-dev.tistory.com/entry/React-%EC%84%B1%EB%83%A5%ED%8D%BC%EC%A6%90-%EC%9B%B9-%EC%84%9C%EB%B9%84%EC%8A%A4-%EB%A7%8C%EB%93%A4%EA%B8%B0-14%EC%9D%BC%EC%B0%A8-Authentication-Zustand-React-Rounter">14일차: Authentication (Zustand, React-Rounter</a>  
+<a href="https://seungho-dev.tistory.com/entry/React-%EC%84%B1%EB%83%A5%ED%8D%BC%EC%A6%90-%EC%9B%B9-%EC%84%9C%EB%B9%84%EC%8A%A4-%EB%A7%8C%EB%93%A4%EA%B8%B0-14%EC%9D%BC%EC%B0%A8-Authentication-Zustand-React-Rounter">14일차: Authentication (Zustand, React-Rounter)</a>  
 <a href="https://seungho-dev.tistory.com/entry/React-%EC%84%B1%EB%83%A5%ED%8D%BC%EC%A6%90-%EC%9B%B9-%EC%84%9C%EB%B9%84%EC%8A%A4-%EB%A7%8C%EB%93%A4%EA%B8%B0-15%EC%9D%BC%EC%B0%A8-React-Query">15일차: React Query</a>  
 
 <br>
