@@ -1,99 +1,30 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# Matchstick Puzzle
+NestJS로 만든 성냥개비 퍼즐 사이트입니다. <a href="https://matchstick-puzzle.com/">바로가기</a>
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+# 개발 기간
+24.11 ~ 24.01 (약 1달)
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+# 주요 기능
+로그인, 퍼즐 제작, 퍼즐 풀기, 레벨 시스템, 스킨 시스템, 리더보드 등
 
-## Description
+# 개발일지
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+<a href="https://seungho-dev.tistory.com/entry/React-%EA%B0%84%EB%8B%A8%ED%95%9C-%EC%84%B1%EB%83%A5%ED%8D%BC%EC%A6%90-%EC%9B%B9-%EC%84%9C%EB%B9%84%EC%8A%A4-%EB%A7%8C%EB%93%A4%EA%B8%B0Vite-%EC%B4%88%EA%B8%B0-%EC%84%A4%EC%A0%95">1일차: react-vite 초기설정</a>  
+<a href="https://seungho-dev.tistory.com/entry/React-%EA%B0%84%EB%8B%A8%ED%95%9C-%EC%84%B1%EB%83%A5%ED%8D%BC%EC%A6%90-%EC%9B%B9%EC%82%AC%EC%9D%B4%ED%8A%B8-%EB%A7%8C%EB%93%A4%EA%B8%B0-2%EC%9D%BC%EC%B0%A8-react-router-dom">2일차: react-router-dom</a>  
+<a href="https://seungho-dev.tistory.com/entry/React-%EA%B0%84%EB%8B%A8%ED%95%9C-%EC%84%B1%EB%83%A5%ED%8D%BC%EC%A6%90-%EC%9B%B9-%EC%84%9C%EB%B9%84%EC%8A%A4-%EB%A7%8C%EB%93%A4%EA%B8%B0-3%EC%9D%BC%EC%B0%A8-navbar-darkmode">3일차: navbar, darkmode 설정</a>  
+<a href="https://seungho-dev.tistory.com/entry/React-%EA%B0%84%EB%8B%A8%ED%95%9C-%EC%84%B1%EB%83%A5%ED%8D%BC%EC%A6%90-%EC%9B%B9-%EC%84%9C%EB%B9%84%EC%8A%A4-%EB%A7%8C%EB%93%A4%EA%B8%B0-4%EC%9D%BC%EC%B0%A8-react-konva">4일차: react-konva</a>  
+<a href="https://seungho-dev.tistory.com/entry/React-%EA%B0%84%EB%8B%A8%ED%95%9C-%EC%84%B1%EB%83%A5%ED%8D%BC%EC%A6%90-%EC%9B%B9-%EC%84%9C%EB%B9%84%EC%8A%A4-%EB%A7%8C%EB%93%A4%EA%B8%B0-5%EC%9D%BC%EC%B0%A8-KonvaTransformer">5일차: Konva.Transformer</a>  
+<a href="https://seungho-dev.tistory.com/entry/React-%EA%B0%84%EB%8B%A8%ED%95%9C-%EC%84%B1%EB%83%A5%ED%8D%BC%EC%A6%90-%EC%9B%B9-%EC%84%9C%EB%B9%84%EC%8A%A4-%EB%A7%8C%EB%93%A4%EA%B8%B0-6%EC%9D%BC%EC%B0%A8-%EB%A6%AC%ED%8C%A9%ED%86%A0%EB%A7%81-History-%EA%B8%B0%EB%8A%A5">6일차: 리팩토링, History 기능</a>  
+<a href="https://seungho-dev.tistory.com/entry/React-%EA%B0%84%EB%8B%A8%ED%95%9C-%EC%84%B1%EB%83%A5%ED%8D%BC%EC%A6%90-%EC%9B%B9-%EC%84%9C%EB%B9%84%EC%8A%A4-%EB%A7%8C%EB%93%A4%EA%B8%B0-7%EC%9D%BC%EC%B0%A8-Undo-Redo-Remove%EA%B5%AC%ED%98%84">7일차: Undo, Redo, Remove구현</a>  
+<a href="https://seungho-dev.tistory.com/entry/React-%EA%B0%84%EB%8B%A8%ED%95%9C-%EC%84%B1%EB%83%A5%ED%8D%BC%EC%A6%90-%EC%9B%B9-%EC%84%9C%EB%B9%84%EC%8A%A4-%EB%A7%8C%EB%93%A4%EA%B8%B0-8%EC%9D%BC%EC%B0%A8-%EA%B2%8C%EC%9E%84-%ED%83%80%EC%9E%85-%ED%9A%9F%EC%88%98-%EC%A0%9C%ED%95%9C-%EA%B5%AC%ED%98%84">8일차: 게임 타입, 횟수 제한 구현</a>  
+<a href="https://seungho-dev.tistory.com/entry/React-%EA%B0%84%EB%8B%A8%ED%95%9C-%EC%84%B1%EB%83%A5%ED%8D%BC%EC%A6%90-%EC%9B%B9-%EC%84%9C%EB%B9%84%EC%8A%A4-%EB%A7%8C%EB%93%A4%EA%B8%B0-9%EC%9D%BC%EC%B0%A8-%EC%A0%95%EB%8B%B5-%EA%B2%80%EC%A6%9D-%EA%B5%AC%ED%98%84">9일차: 정답 검증 구현</a>  
+<a href="https://seungho-dev.tistory.com/entry/React-%EA%B0%84%EB%8B%A8%ED%95%9C-%EC%84%B1%EB%83%A5%ED%8D%BC%EC%A6%90-%EC%9B%B9-%EC%84%9C%EB%B9%84%EC%8A%A4-%EB%A7%8C%EB%93%A4%EA%B8%B0-10%EC%9D%BC%EC%B0%A8-Nestjs">10일차: Nest.js</a>  
+<a href="https://seungho-dev.tistory.com/entry/React-%EC%84%B1%EB%83%A5%ED%8D%BC%EC%A6%90-%EC%9B%B9-%EC%84%9C%EB%B9%84%EC%8A%A4-%EB%A7%8C%EB%93%A4%EA%B8%B0-11%EC%9D%BC%EC%B0%A8-Mysql-Prisma-NestJS">11일차: Mysql / Prisma / NestJS</a>  
+<a href="https://seungho-dev.tistory.com/entry/React-%EC%84%B1%EB%83%A5%ED%8D%BC%EC%A6%90-%EC%9B%B9-%EC%84%9C%EB%B9%84%EC%8A%A4-%EB%A7%8C%EB%93%A4%EA%B8%B0-12%EC%9D%BC%EC%B0%A8-ValidationPipe">12일차: NestJS-ValidationPipe</a>  
+<a href="https://seungho-dev.tistory.com/entry/React-%EC%84%B1%EB%83%A5%ED%8D%BC%EC%A6%90-%EC%9B%B9-%EC%84%9C%EB%B9%84%EC%8A%A4-%EB%A7%8C%EB%93%A4%EA%B8%B0-13%EC%9D%BC%EC%B0%A8-nodemailer-bcrypt-JWT">13일차: nodemailer, bcrypt, JWT</a>  
+<a href="https://seungho-dev.tistory.com/entry/React-%EC%84%B1%EB%83%A5%ED%8D%BC%EC%A6%90-%EC%9B%B9-%EC%84%9C%EB%B9%84%EC%8A%A4-%EB%A7%8C%EB%93%A4%EA%B8%B0-14%EC%9D%BC%EC%B0%A8-Authentication-Zustand-React-Rounter">14일차: Authentication (Zustand, React-Rounter)</a>  
+<a href="https://seungho-dev.tistory.com/entry/React-%EC%84%B1%EB%83%A5%ED%8D%BC%EC%A6%90-%EC%9B%B9-%EC%84%9C%EB%B9%84%EC%8A%A4-%EB%A7%8C%EB%93%A4%EA%B8%B0-15%EC%9D%BC%EC%B0%A8-React-Query">15일차: React Query</a>  
 
-## Project setup
+<br>
 
-```bash
-$ npm install
-```
-
-## Compile and run the project
-
-```bash
-# development
-$ npm run start
-
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
-```
-
-## Run tests
-
-```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
-```
-
-## Deployment
-
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
-
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
-
-```bash
-$ npm install -g mau
-$ mau deploy
-```
-
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
-
-## Resources
-
-Check out a few resources that may come in handy when working with NestJS:
-
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
-
-## Support
-
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+![이미지](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbjVFEe%2FbtsLEqF8SwC%2FRkXLkHjSD3DJOeDta2ozA1%2Fimg.png)
