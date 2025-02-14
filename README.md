@@ -26,7 +26,9 @@ NestJS로 만든 성냥개비 퍼즐 사이트입니다. <a href="https://matchs
 <a href="https://seungho-dev.tistory.com/entry/React-%EC%84%B1%EB%83%A5%ED%8D%BC%EC%A6%90-%EC%9B%B9-%EC%84%9C%EB%B9%84%EC%8A%A4-%EB%A7%8C%EB%93%A4%EA%B8%B0-15%EC%9D%BC%EC%B0%A8-React-Query">15일차: React Query</a>  
 
 <br>
-<a href="https://seungho-dev.tistory.com/entry/React-%EC%84%B1%EB%83%A5%ED%8D%BC%EC%A6%90-%EC%9B%B9-%EC%84%9C%EB%B9%84%EC%8A%A4-%EB%A7%8C%EB%93%A4%EA%B8%B0-15%EC%9D%BC%EC%B0%A8-React-Query">[25-02-14]: Github Actions 자동배포</a>  
+
+<a href="https://seungho-dev.tistory.com/entry/Matchstick-Puzzle-Github-Actions-%EC%9E%90%EB%8F%99%EB%B0%B0%ED%8F%AC-001">[25-02-14]: Github Actions 자동배포</a>  
+
 <br>
 
 ![이미지](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbjVFEe%2FbtsLEqF8SwC%2FRkXLkHjSD3DJOeDta2ozA1%2Fimg.png)
